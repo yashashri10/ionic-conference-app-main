@@ -272,23 +272,36 @@ export class MapPage {
     }
   }
 
-  listen(): void {
+  async listen() {
     console.log('listen action triggered');
-    if (this.isListening) {
-      this.speech.stopListening();
-      this.toggleListenMode();
-      return;
-    }
+    // if (this.isListening) {
+    //   this.speech.stopListening();
+    //   this.toggleListenMode();
+    //   return;
+    // }
 
-    this.toggleListenMode();
+    // this.toggleListenMode();
     let _this = this;
 
-    this.speech.startListening()
-      .subscribe(matches => {
-        _this.zone.run(() => {
-          _this.matches = matches;
-        })
-      }, (error) => console.error(error));
+    // this.speech.startListening()
+    //   .subscribe(matches => {
+    //     _this.zone.run(() => {
+    //       _this.matches = matches;
+    //     })
+    //   }, (error) => console.error(error));
+
+
+       await this.speech.requestPermission();
+        this.speech.startListening()
+          .subscribe(
+            (matches) => {
+              _this.zone.run(() => {
+              _this.matches = matches;
+            })
+              console.log(matches);
+            },
+            (error) => console.error(error)
+          );
 
   }
 
@@ -301,7 +314,7 @@ export class MapPage {
     try {
       await this.textToSpeech.speak({
         text: text,
-        locale: 'en-US', // Optional: specify a locale
+        locale: 'mr-IN', //'en-US', // Optional: specify a locale
         rate: 1.0 // Optional: speech rate (e.g., 0.5 to 2.0)
       });
       console.log('Text spoken successfully');
