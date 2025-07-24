@@ -23,8 +23,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { environment } from './environments/environment';
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
-
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx'; 
 if (environment.production) {
   enableProdMode();
 }
