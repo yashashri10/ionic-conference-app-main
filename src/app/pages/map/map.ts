@@ -214,7 +214,7 @@ import {
 import { Component, NgZone } from '@angular/core';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { CommonModule } from '@angular/common';
-
+import { TextToSpeech } from '@ionic-native/text-to-speech/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: 'map.html',
@@ -236,7 +236,7 @@ export class MapPage {
   recognizedText: string = '';
    isListening: boolean = false;
   matches: any; //Array<String>;
-  constructor(private speech: SpeechRecognition, private zone: NgZone) {}
+  constructor(private speech: SpeechRecognition, private zone: NgZone, private textToSpeech: TextToSpeech) {}
 
   // async startListening() {
   //   await this.speechRecognition.requestPermission();
@@ -295,5 +295,18 @@ export class MapPage {
   toggleListenMode():void {
     this.isListening = this.isListening ? false : true;
     console.log('listening mode is now : ' + this.isListening);
+  }
+
+  async convertTextToSpeech(text: string) {
+    try {
+      await this.textToSpeech.speak({
+        text: text,
+        locale: 'en-US', // Optional: specify a locale
+        rate: 1.0 // Optional: speech rate (e.g., 0.5 to 2.0)
+      });
+      console.log('Text spoken successfully');
+    } catch (e) {
+      console.error('Error speaking text:', e);
+    }
   }
 }
